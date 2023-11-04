@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.set('view engine', 'ejs');
 
-const newUrl = "https://www.instagram.com/reel/ClqvY_sNuhJ/?igshid=MzRlODBiNWFlZA%3D%3D"
+const newUrl = "https://www.instagram.com/reel/CyXlug_O6ZI/?igshid=MzRlODBiNWFlZA=="
 
 const getVid = async (url) => {
   const browser = await puppeteer.launch({
