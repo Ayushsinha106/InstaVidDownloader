@@ -47,15 +47,10 @@ const getVid = async (url) => {
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
+  console.log("app is working")
 });
 
 app.post('/submit', async (req, res) => {
