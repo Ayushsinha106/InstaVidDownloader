@@ -56,13 +56,8 @@ app.get('/', (req, res) => {
 app.post('/submit', async (req, res) => {
   const textInput = req.body.textInput; // This corresponds to the "name" attribute in the form input
   console.log('Received input:', textInput);
-  try {
-    const data = await getVid(textInput);
-    res.render('index', data)
-  } catch (error) {
-    console.error("Async operation failed:", error);
-  }
-  
+  const data = await getVid(textInput);
+  res.render('index', data)  
 });
 
 
