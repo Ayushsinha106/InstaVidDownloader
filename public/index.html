@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InstaVideo Downloader</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: black;
+        color: white;
+      }
+      body {
+        background-color: black;
+        color: white;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        margin: 40px;
+      }
+      .container {
+        padding: 15px;
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        font-size: medium;
+        justify-content: center;
+        font-family: serif;
+        width: 100%;
+      }
+      video {
+        width: 300px;
+        margin: 5px 0;
+      }
+      .downloadBtn {
+        min-height: 50vh;
+        width: 100%;
+        display: none;
+        justify-content: center;
+      }
+      a {
+        display: flex;
+        height: 50px;
+        position: relative;
+        top: 50px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        width: 170px;
+        background-color: rgb(25, 25, 86);
+        color: rgb(0, 142, 250);
+      }
+      /* Style the form container */
+      form {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      input[type="text"] {
+        width: 200px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>InstaVideo Downloader</h1>
+    <div class="inputs">
+      <form action="/submit" method="post">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Enter Link"
+          name="textInput"
+        />
+        <button type="submit" id="LinkSubmit">Submit</button>
+      </form>
+    </div>
+    <div class="container">
+      <!-- <video
+        src="C84C609888AB2A889094FDB878999984_video_dashinit.mp4"
+        autoplay="true"
+        controls
+      ></video> -->
+    </div>
+    <div class="downloadBtn">
+      <a id="downloadButton" download="video.mp4">Download Video</a>
+    </div>
+    <script>
+      const con = document.querySelector(".container");
+      const Down = document.querySelector(".downloadBtn");
+      const LinkSubmit = document.getElementById("LinkSubmit");
+      async function images() {
+        await fetch("http://localhost:3000/api")
+          .then((response) => {
+            console.log(response);
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            const vid = document.createElement("video");
+            vid.src = data.vidContainer;
+            con.appendChild(vid);
+            vid.setAttribute("autoplay", "true");
+            vid.setAttribute("loop", "true");
+            Down.style.display = "flex";
+            Down.setAttribute("href", data.vidContainer);
+            Down.addEventListener("click", () => {
+              console.log("download initiated");
+            });
+          });
+      }
+      // LinkSubmit.addEventListener("click", () => {
+      //   images();
+      // });
+      // images();
+    </script>
+  </body>
+</html>
