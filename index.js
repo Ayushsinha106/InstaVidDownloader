@@ -60,7 +60,7 @@ app.post('/submit', async (req, res) => {
   res.render('index', data)  
 });
 
-app.get('/api', (req, res) => {
+app.get('/api', async (req, res) => {
   const getVid = async (url) => {
     const browser = await puppeteer.launch({
       headless: 'new',
@@ -79,7 +79,8 @@ app.get('/api', (req, res) => {
       pageTitle:pageTitle,
     }
 };
-  res.json({ getVid(newUrl) });
+  const data = await getVid(newUrl)
+  res.json({ data });
 });
 
 const port = process.env.PORT || 9000
