@@ -62,32 +62,24 @@ app.post('/submit', async (req, res) => {
 
 app.get('/api', (req, res) => {
   const getVid = async (url) => {
-  const browser = await puppeteer.launch({
-    headless: 'new',
-  });
-  const page = await browser.newPage();
-  await page.goto(url);
-  
-  await page.waitForSelector('video');
-  const vidEle = await page.$('video')
-  const vidContainer = await page.evaluate(video => video.getAttribute('src'), vidEle)
-  const pageTitle = await page.title()
-  // pageTitle.split(" ").join("_")
-  
-  
-  const data = {
-    vidContainer: vidContainer,
-    pageTitle:pageTitle,
-  }
-  
-  
-  await browser.close();
-  return {
-    vidContainer: vidContainer,
-    pageTitle:pageTitle,
-  }
+    const browser = await puppeteer.launch({
+      headless: 'new',
+    });
+    const page = await browser.newPage();
+    await page.goto(url);
+    
+    await page.waitForSelector('video');
+    const vidEle = await page.$('video')
+    const vidContainer = await page.evaluate(video => video.getAttribute('src'), vidEle)
+    const pageTitle = await page.title()
+    
+    await browser.close();
+    return {
+      vidContainer: vidContainer,
+      pageTitle:pageTitle,
+    }
 };
-  res.json({ message: 'Hello, API!' });
+  res.json({ getVid(newUrl) });
 });
 
 const port = process.env.PORT || 9000
