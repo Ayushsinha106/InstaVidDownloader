@@ -15,7 +15,6 @@ app.use(express.json());
 
 app.set('view engine', 'ejs');
 
-const newUrl = "https://www.instagram.com/reel/CyXlug_O6ZI/?igshid=MzRlODBiNWFlZA=="
 
 const getVid = async (url) => {
   const browser = await puppeteer.launch({
@@ -28,8 +27,6 @@ const getVid = async (url) => {
   const vidEle = await page.$('video')
   const vidContainer = await page.evaluate(video => video.getAttribute('src'), vidEle)
   const pageTitle = await page.title()
-  // pageTitle.split(" ").join("_")
-  
   
   const data = {
     vidContainer: vidContainer,
@@ -54,34 +51,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submit', async (req, res) => {
-  const textInput = req.body.textInput; // This corresponds to the "name" attribute in the form input
+  const textInput = req.body.textInput;
   console.log('Received input:', textInput);
   const data = await getVid(textInput);
   res.render('index', data)  
 });
 
-app.get('/api', async (req, res) => {
-  const getVid = async (url) => {
-    const browser = await puppeteer.launch({
-      headless: 'new',
-    });
-    const page = await browser.newPage();
-    await page.goto(url);
-    
-    await page.waitForSelector('video');
-    const vidEle = await page.$('video')
-    const vidContainer = await page.evaluate(video => video.getAttribute('src'), vidEle)
-    const pageTitle = await page.title()
-    
-    await browser.close();
-    return {
-      vidContainer: vidContainer,
-      pageTitle:pageTitle,
-    }
-};
-  const data = await getVid(newUrl)
-  res.json({ data });
-});
+
 
 const port = process.env.PORT || 9000
 
